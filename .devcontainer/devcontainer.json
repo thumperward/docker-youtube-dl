@@ -1,0 +1,16 @@
+{
+	"name": "Debian",
+	"image": "mcr.microsoft.com/devcontainers/base:debian",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker": {},
+		"ghcr.io/devcontainers/features/python": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-azuretools.vscode-docker"
+			]
+		}
+	}
+	// "postCreateCommand": "uname -a",
+}

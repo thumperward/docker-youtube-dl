@@ -29,23 +29,24 @@ RUN set -x && \
     KEPT_PACKAGES+=(zip) && \
     KEPT_PACKAGES+=(atomicparsley) && \
     KEPT_PACKAGES+=(aria2) && \
+    KEPT_PACKAGES+=(adduser) && \
     # Install packages
-    apt-get update -y && \
-    apt-get install -y --no-install-recommends \
-        ${KEPT_PACKAGES[@]} \
-        ${TEMP_PACKAGES[@]} \
-        && \
+    apt update -y && \
+    apt install -y --no-install-recommends \
+    ${KEPT_PACKAGES[@]} \
+    ${TEMP_PACKAGES[@]} \
+    && \
     git config --global advice.detachedHead false && \
     # Install required python modules
-    python3 -m pip install --no-cache-dir pyxattr && \
+    pip install --no-cache-dir --break-system pyxattr && \
     # Install yt-dlp via pip
-    python3 -m pip install --no-cache-dir --force-reinstall yt-dlp && \
+    pip install --no-cache-dir --break-system --force-reinstall yt-dlp && \
     # Create /config directory
     mkdir -p /config && \
     # Clean-up
-    apt-get remove -y ${TEMP_PACKAGES[@]} && \
-    apt-get autoremove -y && \
-    apt-get clean -y && \
+    apt remove -y ${TEMP_PACKAGES[@]} && \
+    apt autoremove -y && \
+    apt clean -y && \
     rm -rf /var/lib/apt/lists/* /tmp/* /src && \
     # Document version
     yt-dlp --version > /IMAGE_VERSION

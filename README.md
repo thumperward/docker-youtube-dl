@@ -48,7 +48,24 @@ alias yt-dl='docker run \
 
 **HANDY HINT:** After updating your `.bash_aliases` file, run `source ~/.bash_aliases` to make your changes live!
 
+On Windows, add the following to
+`~\Documents\Powershell\Microsoft.PowerShell_profile.ps1`:
+
+```powershell
+Function yt-dl { 
+  docker run -v ${pwd}:/workdir:rw mikenye/youtube-dl $ARGS 
+}
+```
+
 When run (eg: `yt-dl <video_url>`), it will download the video to the current working directory, and take any command line arguments that the normal youtube-dl binary would.
+
+## Building
+
+To build the image locally, run:
+
+```shell
+docker build -t mikenye/docker-youtube-dl .
+```
 
 ## Running on Unraid
 
