@@ -1,5 +1,5 @@
 ---
-name: Deploy
+name: "Deploy"
 
 on:
   workflow_dispatch:
@@ -20,14 +20,14 @@ on:
 jobs:
   deploy:
     name: "Deploy"
-    uses: sdr-enthusiasts/common-github-workflows/.github/workflows/build_and_push_image.yml@main
+    uses: "sdr-enthusiasts/common-github-workflows/.github/workflows/build_and_push_image.yml@main"
     with:
       push_enabled: true
       push_destinations: "ghcr.io;dockerhub"
-      ghcr_repo_owner: ${{ github.repository_owner }}
-      ghcr_repo: ${{ github.repository }}
-      dockerhub_profile: mikenye
-      dockerhub_repo: youtube-dl
+      ghcr_repo_owner: "${{ github.repository_owner }}"
+      ghcr_repo: "${{ github.repository }}"
+      dockerhub_profile: "mikenye"
+      dockerhub_repo: "youtube-dl"
     secrets:
-      ghcr_token: ${{ secrets.GITHUB_TOKEN }}
-      dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+      ghcr_token: "${{ secrets.GITHUB_TOKEN }}"
+      dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"

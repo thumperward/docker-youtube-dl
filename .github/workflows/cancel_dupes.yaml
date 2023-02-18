@@ -1,4 +1,4 @@
-name: Cancelling Duplicates
+name: "Cancelling Duplicates"
 on:
   workflow_run:
     workflows:
@@ -11,11 +11,11 @@ on:
 jobs:
   cancel-duplicate-workflow-runs:
     name: "Cancel duplicate workflow runs"
-    runs-on: ubuntu-latest
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: potiuk/cancel-workflow-runs@master
+      - uses: "potiuk/cancel-workflow-runs@master"
         name: "Cancel duplicate workflow runs"
         with:
-          cancelMode: allDuplicates
-          token: ${{ secrets.GITHUB_TOKEN }}
-          sourceRunId: ${{ github.event.workflow_run.id }}
+          cancelMode: "allDuplicates"
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          sourceRunId: "${{ github.event.workflow_run.id }}"
