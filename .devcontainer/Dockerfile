@@ -1,10 +1,10 @@
 FROM mcr.microsoft.com/devcontainers/base:debian
 
-RUN apt update -y && \
-  apt install -y --no-install-recommends \
+RUN apt-get update -y && \
+  apt-get install -y --no-install-recommends \
   python3-pip  && \
-  apt autoremove -y && \
-  apt clean -y && \
+  apt-get autoremove -y && \
+  apt-get clean -y && \
   rm -rf /var/lib/apt/lists/* /tmp/* /src
 
-RUN pip install pre-commit detect-secrets
+RUN pip install --no-cache-dir pre-commit detect-secrets

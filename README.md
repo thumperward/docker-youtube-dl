@@ -62,8 +62,8 @@ On Windows, add the following to
 `~\Documents\Powershell\Microsoft.PowerShell_profile.ps1`:
 
 ```powershell
-Function yt-dl { 
-  docker run -v ${pwd}:/workdir:rw mikenye/youtube-dl $ARGS 
+Function yt-dl {
+  docker run -v ${pwd}:/workdir:rw mikenye/youtube-dl $ARGS
 }
 ```
 

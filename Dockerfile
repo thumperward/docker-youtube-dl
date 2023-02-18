@@ -31,8 +31,8 @@ RUN set -x && \
     KEPT_PACKAGES+=(aria2) && \
     KEPT_PACKAGES+=(adduser) && \
     # Install packages
-    apt update -y && \
-    apt install -y --no-install-recommends \
+    apt-get update -y && \
+    apt-get install -y --no-install-recommends \
     ${KEPT_PACKAGES[@]} \
     ${TEMP_PACKAGES[@]} \
     && \
@@ -44,9 +44,9 @@ RUN set -x && \
     # Create /config directory
     mkdir -p /config && \
     # Clean-up
-    apt remove -y ${TEMP_PACKAGES[@]} && \
-    apt autoremove -y && \
-    apt clean -y && \
+    apt-get remove -y ${TEMP_PACKAGES[@]} && \
+    apt-get autoremove -y && \
+    apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* /tmp/* /src && \
     # Document version
     yt-dlp --version > /IMAGE_VERSION
