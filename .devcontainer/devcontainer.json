@@ -1,9 +1,10 @@
 {
 	"name": "Debian",
-	"image": "mcr.microsoft.com/devcontainers/base:debian",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
 	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker": {},
-		"ghcr.io/devcontainers/features/python": {}
+		"ghcr.io/devcontainers/features/docker-in-docker": {}
 	},
 	"customizations": {
 		"vscode": {
@@ -12,6 +13,6 @@
 				"redhat.vscode-yaml"
 			]
 		}
-	}
-	// "postCreateCommand": "uname -a",
+	},
+	"postCreateCommand": "pre-commit install"
 }
