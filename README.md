@@ -1,13 +1,17 @@
 # mikenye/youtube-dl
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mikenye/docker-youtube-dl/Deploy)](https://github.com/mikenye/docker-youtube-dl/actions/workflows/deploy.yml)
-[![Docker Pulls](https://img.shields.io/docker/pulls/mikenye/youtube-dl.svg)](https://hub.docker.com/r/mikenye/youtube-dl)
-[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/mikenye/youtube-dl/latest)](https://hub.docker.com/r/mikenye/youtube-dl)
+[![GitHub Workflow
+Status](https://img.shields.io/github/workflow/status/mikenye/docker-youtube-dl/Deploy)](https://github.com/mikenye/docker-youtube-dl/actions/workflows/deploy.yml)
+[![Docker
+Pulls](https://img.shields.io/docker/pulls/mikenye/youtube-dl.svg)](https://hub.docker.com/r/mikenye/youtube-dl)
+[![Docker Image Size
+(tag)](https://img.shields.io/docker/image-size/mikenye/youtube-dl/latest)](https://hub.docker.com/r/mikenye/youtube-dl)
 [![Discord](https://img.shields.io/discord/734090820684349521)](https://discord.gg/sTf9uYF)
 
 `yt-dl` - download videos many online video platforms
 
-* Note: As of 2022-01-05 updated to use [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+* Note: As of 2022-01-05 updated to use
+  [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 
 ## Table of Contents
 
@@ -22,20 +26,25 @@
   * [Data Volumes](#data-volumes)
   * [Environment Variables](#environment-variables)
   * [Ports](#ports)
-  * [Scheduled download of youtube subscriptions](#scheduled-download-of-youtube-subscriptions)
+  * [Scheduled download of youtube
+    subscriptions](#scheduled-download-of-youtube-subscriptions)
   * [Docker Image Update](#docker-image-update)
   * [Shell access](#shell-access)
   * [Support or Contact](#support-or-contact)
 
 ## Multi Architecture Support
 
-This image should pull and run on the following architectures: `linux/amd64`, `linux/arm64/v8`, `linux/arm/v6`, `linux/arm/v7`, `linux/386`, `linux/ppc64le`, `linux/s390x`.
+This image should pull and run on the following architectures: `linux/amd64`,
+`linux/arm64/v8`, `linux/arm/v6`, `linux/arm/v7`, `linux/386`, `linux/ppc64le`,
+`linux/s390x`.
 
 ## Quick Start
 
-**NOTE**: The docker command provided in this quick start is given as an example, and parameters should be adjusted to your needs.
+**NOTE**: The docker command provided in this quick start is given as an
+example, and parameters should be adjusted to your needs.
 
-It is suggested to configure an alias as follows (and place into your `.bash_aliases` file):
+It is suggested to configure an alias as follows (and place into your
+`.bash_aliases` file):
 
 ```shell
 alias yt-dl='docker run \
@@ -46,7 +55,8 @@ alias yt-dl='docker run \
                   ghcr.io/mikenye/docker-youtube-dl:latest'
 ```
 
-**HANDY HINT:** After updating your `.bash_aliases` file, run `source ~/.bash_aliases` to make your changes live!
+**HANDY HINT:** After updating your `.bash_aliases` file, run `source
+~/.bash_aliases` to make your changes live!
 
 On Windows, add the following to
 `~\Documents\Powershell\Microsoft.PowerShell_profile.ps1`:
@@ -57,7 +67,9 @@ Function yt-dl {
 }
 ```
 
-When run (eg: `yt-dl <video_url>`), it will download the video to the current working directory, and take any command line arguments that the normal youtube-dl binary would.
+When run (eg: `yt-dl <video_url>`), it will download the video to the current
+working directory, and take any command line arguments that the normal
+youtube-dl binary would.
 
 ## Building
 
@@ -69,15 +81,18 @@ docker build -t mikenye/docker-youtube-dl .
 
 ## Running on Unraid
 
-Unraid forum user Timmyx has written a fantastic guide to deploying this image on Unraid. The guide can be found here:
+Unraid forum user Timmyx has written a fantastic guide to deploying this image
+on Unraid. The guide can be found here:
 
 <https://forums.unraid.net/topic/100256-youtube-dl-strategy/>
 
 ## Using a config file
 
-To prevent having to specify many command line arguments every time you run youtube-dl, you may wish to have an external configuation file.
+To prevent having to specify many command line arguments every time you run
+youtube-dl, you may wish to have an external configuation file.
 
-In order for the docker container to use the configuration file, it must be mapped through to the container.
+In order for the docker container to use the configuration file, it must be
+mapped through to the container.
 
 ```shell
 docker run \
@@ -91,12 +106,15 @@ docker run \
 
 Where:
 
-* `/path/to/downloaded/videos` is where youtube-dl will download videos to (use `"$(pwd)"` to downloade to current working directory.
+* `/path/to/downloaded/videos` is where youtube-dl will download videos to (use
+  `"$(pwd)"` to downloade to current working directory.
 * `/path/to/youtube-dl.conf` is the path to your youtube-dl.conf file.
 
 ## Authentication using `.netrc`
 
-If you want to download videos that require authentication (or your youtube subscriptions for example, see below), it is recommended to use a `.netrc` file.
+If you want to download videos that require authentication (or your youtube
+subscriptions for example, see below), it is recommended to use a `.netrc`
+file.
 
 You can create a file with the following syntax:
 
@@ -109,7 +127,9 @@ Where:
 * `USERNAME` is replaced with your youtube account username
 * `PASSWORD` is replaced with your youtube account password
 
-You may need to disable some account security settings (such as '2-Step Verification' and 'Use your phone to sign in', so it is suggested to make a long, complex password (eg: 32 random characters).
+You may need to disable some account security settings (such as '2-Step
+Verification' and 'Use your phone to sign in', so it is suggested to make a
+long, complex password (eg: 32 random characters).
 
 This file can then be mapped through to the container as a `.netrc` file, eg:
 
@@ -132,7 +152,8 @@ docker run \
 | `/config/.netrc` | `ro` | If this file exists at container startup, it is symlinked to `/home/dockeruser/.netrc` at container startup. The `youtube-dl` process will look in this location for a .netrc file (if `--netrc` is specified on the command line or via a configuration file). |
 | `/config/.cache` | `rw` | If this directory exists at container startup, it is symlinked to `/home/dockeruser/.cache/youtube-dl` at container startup. The `youtube-dl` process automatically uses this path for caching. |
 
-You can place any other configuration files within `/config`, and then specify them on the command line, eg: `--batch-file /config/batch-file.conf`.
+You can place any other configuration files within `/config`, and then specify
+them on the command line, eg: `--batch-file /config/batch-file.conf`.
 
 ## Data Volumes
 
@@ -144,7 +165,9 @@ There are no data volumes explicity set in the Dockerfile, however:
 
 ## Environment Variables
 
-To customize some properties of the container, the following environment variables can be passed via the `-e` parameter (one for each variable). This paramater has the format `<VARIABLE_NAME>=<VALUE>`.
+To customize some properties of the container, the following environment
+variables can be passed via the `-e` parameter (one for each variable). This
+paramater has the format `<VARIABLE_NAME>=<VALUE>`.
 
 | Variable | Description | Recommended Setting |
 |----------|-------------|---------------------|
@@ -159,7 +182,9 @@ No port mappings are required for this container.
 
 ## Scheduled download of youtube subscriptions
 
-In order to perform a scheduled download of youtube subscriptions, it is recommended to use the following command to be executed via cron on a regular basis (eg: daily).
+In order to perform a scheduled download of youtube subscriptions, it is
+recommended to use the following command to be executed via cron on a regular
+basis (eg: daily).
 
 ```shell
 docker run \
@@ -185,21 +210,33 @@ Where:
 
 * `GID`: a group ID to run as (if in a normal user's crontab, use `$(id -g)`
 * `UID`: a user ID to run as (if in a normal user's crontab, use `$(id -u)`
-* `CPUS`: the number of CPUs to constrain the docker container to. This may be required to prevent impacting system performance if transcoding takes place. If not, the `--cpus` argument can be completely omitted.
-* `/path/to/netrc`: the path to the file containing your youtube credentials, see above.
+* `CPUS`: the number of CPUs to constrain the docker container to. This may be
+  required to prevent impacting system performance if transcoding takes place.
+  If not, the `--cpus` argument can be completely omitted.
+* `/path/to/netrc`: the path to the file containing your youtube credentials,
+  see above.
 * `/path/to/youtube/subscriptions`: the path where videos will be saved.
-* `/path/to/youtube-dl.conf`: the path to your `youtube-dl.conf` file, where settings such as output file naming, quality, etc can be determined.
+* `/path/to/youtube-dl.conf`: the path to your `youtube-dl.conf` file, where
+  settings such as output file naming, quality, etc can be determined.
 * `/path/to/logs/youtube-dl.err`: the path to the error log, if desired
 * `/path/to/logs/youtube-dl.log`: the path to the application log, if desired
 
 Notes:
 
-* `--rm` is given so the container is destroyed when execution is finished. This will prevent your drive from slowly filling up with exited containers.
-* `--name youtube-dl-cron` is given so that multiple instances are not started by cron. In the event the previous container is still running, docker will simply exit with an error that the container name is already taken.
-* `--dateafter now-5days` is given to limit youtube-dl to only download recent videos. Feel free to adjust as required.
-* `--limit-rate` is given to prevent impacting your internet connection. Feel free to adjust as required.
+* `--rm` is given so the container is destroyed when execution is finished.
+  This will prevent your drive from slowly filling up with exited containers.
+* `--name youtube-dl-cron` is given so that multiple instances are not started
+  by cron. In the event the previous container is still running, docker will
+  simply exit with an error that the container name is already taken.
+* `--dateafter now-5days` is given to limit youtube-dl to only download recent
+  videos. Feel free to adjust as required.
+* `--limit-rate` is given to prevent impacting your internet connection. Feel
+  free to adjust as required.
 
-In the example above, a configuration file is used. This allows us to easily add commands to select a specific quality, and name the videos with a specific format. For example, to download the videos into a format recognised by Plex, you could use the following:
+In the example above, a configuration file is used. This allows us to easily
+add commands to select a specific quality, and name the videos with a specific
+format. For example, to download the videos into a format recognised by Plex,
+you could use the following:
 
 ```shell
 -v
@@ -223,14 +260,19 @@ The above example config file will:
 * Ignore errors
 * Will not overwrite existing videos
 * Will continue downloading in the event a download is interrupted
-* Will download metadata and embed into the resulting video, so that Plex will be able to display this information
-* Will download oldest videos first, so videos can be sorted by "date added" in Plex
-* Will download the best quality up to a maximum of 1080p (prevent 4K downloads)
+* Will download metadata and embed into the resulting video, so that Plex will
+  be able to display this information
+* Will download oldest videos first, so videos can be sorted by "date added" in
+  Plex
+* Will download the best quality up to a maximum of 1080p (prevent 4K
+  downloads)
 * Will format videos with a separate folder for each uploader.
 
 ## Docker Image Update
 
-If the system on which the container runs doesn't provide a way to easily update the Docker image (eg: watchtower), simply pull the latest version of the container:
+If the system on which the container runs doesn't provide a way to easily
+update the Docker image (eg: watchtower), simply pull the latest version of the
+container:
 
 ```shell
 docker pull ghcr.io/mikenye/docker-youtube-dl:latest
@@ -246,7 +288,8 @@ docker exec -ti CONTAINER sh
 
 Where `CONTAINER` is the name of the running container.
 
-To start a container with a shell (instead of `youtube-dl`), execute the following command:
+To start a container with a shell (instead of `youtube-dl`), execute the
+following command:
 
 ```shell
 docker run --rm -ti --entrypoint=/bin/sh ghcr.io/mikenye/docker-youtube-dl:latest
@@ -254,4 +297,5 @@ docker run --rm -ti --entrypoint=/bin/sh ghcr.io/mikenye/docker-youtube-dl:lates
 
 ## Support or Contact
 
-Having troubles with the container or have questions? Please [create a new issue](https://github.com/mikenye/docker-youtube-dl/issues).
+Having troubles with the container or have questions? Please [create a new
+issue](https://github.com/mikenye/docker-youtube-dl/issues).
