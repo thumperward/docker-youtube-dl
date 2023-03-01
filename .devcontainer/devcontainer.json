@@ -14,5 +14,5 @@
 			]
 		}
 	},
-	"postCreateCommand": "pre-commit install"
+	"postAttachCommand": "pre-commit install"
 }
